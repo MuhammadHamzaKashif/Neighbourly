@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Neighborly</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i data-lucide="hand-helping"></i>
+                    <h1>Neighborly</h1>
+                </div>
+            </div>
+            <div class="sidebar-separator"></div>
+            <div class="sidebar-content">
+                <div class="sidebar-group">
+                    <div class="sidebar-group-label">Main</div>
+                    <div class="sidebar-menu">
+                        <a href="index.html" class="sidebar-menu-item">
+                            <i data-lucide="home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a th:href="@{/request-help.html}" class="sidebar-menu-item">
+                            <i data-lucide="hand-helping"></i>
+                            <span>Request Help</span>
+                        </a>
+                        <a th:href="@{/reviews.html}" class="sidebar-menu-item">
+                            <i data-lucide="star"></i>
+                            <span>Reviews</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="sidebar-separator"></div>
+
+                <div class="sidebar-group">
+                    <div class="sidebar-group-label">Admin</div>
+                    <div class="sidebar-menu">
+                        <a href="admin.html" class="sidebar-menu-item active">
+                            <i data-lucide="shield"></i>
+                            <span>Request Approval</span>
+                        </a>
+                        <a href="#" class="sidebar-menu-item">
+                            <i data-lucide="users"></i>
+                            <span>User Management</span>
+                        </a>
+                        <a href="#" class="sidebar-menu-item">
+                            <i data-lucide="flag"></i>
+                            <span>Reports</span>
+                        </a>
+                        <a href="#" class="sidebar-menu-item">
+                            <i data-lucide="settings"></i>
+                            <span>System Settings</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <img src="https://via.placeholder.com/32" alt="Admin">
+                        <div class="avatar-fallback">AD</div>
+                    </div>
+                    <div class="user-info">
+                        <p class="user-name" th:text="${user.username}"></p>
+                        <p class="user-role">Administrator</p>
+                    </div>
+                    <div class="user-actions">
+                        <button class="icon-button" id="theme-toggle">
+                            <i data-lucide="moon"></i>
+                        </button>
+                        <button class="icon-button">
+                            <i data-lucide="log-out"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div class="page-header">
+                    <div>
+                        <h1>Request Approval</h1>
+                        <p class="text-muted">Review and approve or deny help requests from community members</p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="search-container">
+                            <i data-lucide="search"></i>
+                            <input type="text" placeholder="Search requests..." id="search-requests">
+                        </div>
+                        <select id="filter-status" class="filter-select">
+                            <option value="all">All Requests</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="denied">Denied</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-icon pending">
+                            <i data-lucide="clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>12</h3>
+                            <p>Pending Requests</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon approved">
+                            <i data-lucide="check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>48</h3>
+                            <p>Approved Requests</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon denied">
+                            <i data-lucide="x-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>5</h3>
+                            <p>Denied Requests</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon total">
+                            <i data-lucide="list"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>65</h3>
+                            <p>Total Requests</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-requests" id="requests-container">
+                    <!-- Request Card 1 -->
+                    <!-- <div class="admin-request-card" data-id="1" data-status="pending">
+            <div class="request-header">
+              <div class="request-title-section">
+                <h2 class="request-title">Grocery Delivery</h2>
+                <span class="request-id">#1</span>
+                <span class="badge badge-pending">Pending</span>
+              </div>
+              <div class="request-actions">
+                <button class="btn btn-approve" data-id="1">
+                  <i data-lucide="check"></i>
+                  Approve
+                </button>
+                <button class="btn btn-deny" data-id="1">
+                  <i data-lucide="x"></i>
+                  Deny
+                </button>
+                <button class="btn btn-outline btn-expand">
+                  <i data-lucide="chevron-down"></i>
+                </button>
+              </div>
+            </div>
+            <div class="request-summary">
+              <div class="request-detail">
+                <i data-lucide="map-pin"></i>
+                <span>123 Main St, Springfield, 12345</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="tag"></i>
+                <span>Category: Errands & Shopping</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="calendar"></i>
+                <span>Needed: May 15, 2023 - Morning</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="clock"></i>
+                <span>Duration: 1-2 hours</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="alert-triangle"></i>
+                <span>Urgency: High</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="user"></i>
+                <span>Requester ID: 42</span>
+              </div>
+            </div>
+            <div class="request-details hidden">
+              <div class="details-section">
+                <h3>Description</h3>
+                <p>Need help picking up groceries from Whole Foods. I have mobility issues and cannot carry heavy items. I have a detailed shopping list ready.</p>
+              </div>
+              <div class="details-grid">
+                <div class="details-column">
+                  <div class="details-section">
+                    <h3>Location Details</h3>
+                    <div class="detail-item">
+                      <span class="detail-label">Address:</span>
+                      <span class="detail-value">123 Main St</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">City:</span>
+                      <span class="detail-value">Springfield</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">ZIP:</span>
+                      <span class="detail-value">12345</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Location Notes:</span>
+                      <span class="detail-value">Apartment building with elevator. Unit 302. Ring doorbell upon arrival.</span>
+                    </div>
+                  </div>
+                  <div class="details-section">
+                    <h3>Time Details</h3>
+                    <div class="detail-item">
+                      <span class="detail-label">Date Needed:</span>
+                      <span class="detail-value">May 15, 2023</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Time Needed:</span>
+                      <span class="detail-value">Morning</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Duration:</span>
+                      <span class="detail-value">1-2 hours</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Urgency:</span>
+                      <span class="detail-value">High</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="details-column">
+                  <div class="details-section">
+                    <h3>Volunteer Requirements</h3>
+                    <div class="detail-item">
+                      <span class="detail-label">Needs Car:</span>
+                      <span class="detail-value">Yes</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Needs Experience:</span>
+                      <span class="detail-value">No</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Background Check:</span>
+                      <span class="detail-value">Yes</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Volunteer Preference:</span>
+                      <span class="detail-value">No preference</span>
+                    </div>
+                  </div>
+                  <div class="details-section">
+                    <h3>Special Instructions</h3>
+                    <p>Please call when you arrive at the store. I may need to add a few items to the list. I will pay for groceries via mobile payment when you arrive at my door.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+                    <!-- Request Card 2 -->
+                    <!-- <div class="admin-request-card" data-id="2" data-status="pending">
+            <div class="request-header">
+              <div class="request-title-section">
+                <h2 class="request-title">Lawn Mowing</h2>
+                <span class="request-id">#2</span>
+                <span class="badge badge-pending">Pending</span>
+              </div>
+              <div class="request-actions">
+                <button class="btn btn-approve" data-id="2">
+                  <i data-lucide="check"></i>
+                  Approve
+                </button>
+                <button class="btn btn-deny" data-id="2">
+                  <i data-lucide="x"></i>
+                  Deny
+                </button>
+                <button class="btn btn-outline btn-expand">
+                  <i data-lucide="chevron-down"></i>
+                </button>
+              </div>
+            </div>
+            <div class="request-summary">
+              <div class="request-detail">
+                <i data-lucide="map-pin"></i>
+                <span>456 Oak Ave, Springfield, 12345</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="tag"></i>
+                <span>Category: Yard Work</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="calendar"></i>
+                <span>Needed: May 18, 2023 - Afternoon</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="clock"></i>
+                <span>Duration: 2-3 hours</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="alert-triangle"></i>
+                <span>Urgency: Medium</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="user"></i>
+                <span>Requester ID: 28</span>
+              </div>
+            </div>
+            <div class="request-details hidden">
+              <div class="details-section">
+                <h3>Description</h3>
+                <p>Need help mowing my front and back lawn. I recently had surgery and cannot do this myself for a few weeks. Lawn mower and gas are provided.</p>
+              </div>
+              <div class="details-grid">
+                <div class="details-column">
+                  <div class="details-section">
+                    <h3>Location Details</h3>
+                    <div class="detail-item">
+                      <span class="detail-label">Address:</span>
+                      <span class="detail-value">456 Oak Ave</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">City:</span>
+                      <span class="detail-value">Springfield</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">ZIP:</span>
+                      <span class="detail-value">12345</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Location Notes:</span>
+                      <span class="detail-value">Single-story house with blue trim. Lawn mower is in the garage.</span>
+                    </div>
+                  </div>
+                  <div class="details-section">
+                    <h3>Time Details</h3>
+                    <div class="detail-item">
+                      <span class="detail-label">Date Needed:</span>
+                      <span class="detail-value">May 18, 2023</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Time Needed:</span>
+                      <span class="detail-value">Afternoon</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Duration:</span>
+                      <span class="detail-value">2-3 hours</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Urgency:</span>
+                      <span class="detail-value">Medium</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="details-column">
+                  <div class="details-section">
+                    <h3>Volunteer Requirements</h3>
+                    <div class="detail-item">
+                      <span class="detail-label">Needs Car:</span>
+                      <span class="detail-value">No</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Needs Experience:</span>
+                      <span class="detail-value">Yes</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Background Check:</span>
+                      <span class="detail-value">No</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Volunteer Preference:</span>
+                      <span class="detail-value">Previous volunteers only</span>
+                    </div>
+                  </div>
+                  <div class="details-section">
+                    <h3>Special Instructions</h3>
+                    <p>Please be careful around the flower beds. The lawn mower is a bit old but works well. There's a water hose on the side of the house if you need it.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+                    <!-- Request Card 3 -->
+                    <!-- <div class="admin-request-card" data-id="3" data-status="pending">
+            <div class="request-header">
+              <div class="request-title-section">
+                <h2 class="request-title">Computer Setup</h2>
+                <span class="request-id">#3</span>
+                <span class="badge badge-pending">Pending</span>
+              </div>
+              <div class="request-actions">
+                <button class="btn btn-approve" data-id="3">
+                  <i data-lucide="check"></i>
+                  Approve
+                </button>
+                <button class="btn btn-deny" data-id="3">
+                  <i data-lucide="x"></i>
+                  Deny
+                </button>
+                <button class="btn btn-outline btn-expand">
+                  <i data-lucide="chevron-down"></i>
+                </button>
+              </div>
+            </div>
+            <div class="request-summary">
+              <div class="request-detail">
+                <i data-lucide="map-pin"></i>
+                <span>789 Elm St, Springfield, 12345</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="tag"></i>
+                <span>Category: Tech Support</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="calendar"></i>
+                <span>Needed: May 20, 2023 - Evening</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="clock"></i>
+                <span>Duration: 1-2 hours</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="alert-triangle"></i>
+                <span>Urgency: Low</span>
+              </div>
+              <div class="request-detail">
+                <i data-lucide="user"></i>
+                <span>Requester ID: 15</span>
+              </div>
+            </div>
+            <div class="request-details hidden">
+              <div class="details-section">
+                <h3>Description</h3>
+                <p>I recently purchased a new computer and need help setting it up. I'm not very tech-savvy and would appreciate someone who can explain things clearly. Need to set up email, internet, and basic programs.</p>
+              </div>
+              <div class="details-grid">
+                <div class="details-column">
+                  <div class="details-section">
+                    <h3>Location Details</h3>
+                    <div class="detail-item">
+                      <span class="detail-label">Address:</span>
+                      <span class="detail-value">789 Elm St</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">City:</span>
+                      <span class="detail-value">Springfield</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">ZIP:</span>
+                      <span class="detail-value">12345</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Location Notes:</span>
+                      <span class="detail-value">Apartment 5B, second floor. Elevator available.</span>
+                    </div>
+                  </div>
+                  <div class="details-section">
+                    <h3>Time Details</h3>
+                    <div class="detail-item">
+                      <span class="detail-label">Date Needed:</span>
+                      <span class="detail-value">May 20, 2023</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Time Needed:</span>
+                      <span class="detail-value">Evening</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Duration:</span>
+                      <span class="detail-value">1-2 hours</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Urgency:</span>
+                      <span class="detail-value">Low</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="details-column">
+                  <div class="details-section">
+                    <h3>Volunteer Requirements</h3>
+                    <div class="detail-item">
+                      <span class="detail-label">Needs Car:</span>
+                      <span class="detail-value">No</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Needs Experience:</span>
+                      <span class="detail-value">Yes</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Background Check:</span>
+                      <span class="detail-value">Yes</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Volunteer Preference:</span>
+                      <span class="detail-value">No preference</span>
+                    </div>
+                  </div>
+                  <div class="details-section">
+                    <h3>Special Instructions</h3>
+                    <p>I have all the original packaging and manuals for the computer. I also have Wi-Fi set up already. I'm a senior citizen, so please be patient with explanations.</p>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <span class="pagination-ellipsis">...</span>
+                    <button class="pagination-btn">8</button>
+                    <button class="pagination-btn pagination-next">
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+    </div>
+    </main>
+    </div>
+
+    <!-- <script th:src="@{/js/script.js}"></script> -->
+    <script th:src="@{/js/admin.js}"></script>
+</body>
+
+</html>

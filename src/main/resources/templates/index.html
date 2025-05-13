@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neighborly - Community Assistance Platform</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i data-lucide="hand-helping"></i>
+                    <h1>Neighborly</h1>
+                </div>
+            </div>
+            <div class="sidebar-separator"></div>
+            <div class="sidebar-content">
+                <div class="sidebar-group">
+                    <div class="sidebar-group-label">Main</div>
+                    <div class="sidebar-menu">
+                        <a href="#" class="sidebar-menu-item active">
+                            <i data-lucide="home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a th:href="@{/request-help.html}" class="sidebar-menu-item">
+                            <i data-lucide="hand-helping"></i>
+                            <span>Request Help</span>
+                        </a>
+                        <!-- <a href="volunteer.html" class="sidebar-menu-item">
+                            <i data-lucide="users"></i>
+                            <span>Volunteer</span>
+                        </a>
+                        <a href="messages.html" class="sidebar-menu-item">
+                            <i data-lucide="message-square"></i>
+                            <span>Messages</span>
+                        </a>
+                        <a href="calendar.html" class="sidebar-menu-item">
+                            <i data-lucide="calendar"></i>
+                            <span>Calendar</span>
+                        </a> -->
+                        <a th:href="@{/reviews.html}" class="sidebar-menu-item">
+                            <i data-lucide="star"></i>
+                            <span>Reviews</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="sidebar-separator"></div>
+
+                <div class="sidebar-group" id="sg-2">
+                    <div class="sidebar-group-label">Account</div>
+                    <div class="sidebar-menu">
+                        <a href="profile.html" class="sidebar-menu-item">
+                            <i data-lucide="user"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="settings.html" class="sidebar-menu-item">
+                            <i data-lucide="settings"></i>
+                            <span>Settings</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <div class="avatar-fallback" th:text="${#strings.substring(user.username,0,1).toUpperCase()}">
+                        </div>
+                    </div>
+                    <div class="user-info">
+                        <p class="user-name" th:text="${user.username}"></p>
+                        <p class="user-email" id="userEmail" th:text="${user.email}"></p>
+                    </div>
+                    <div class="user-actions">
+                        <button class="icon-button" id="theme-toggle">
+                            <i data-lucide="moon"></i>
+                        </button>
+                        <button class="icon-button" id="logout-btn">
+                            <i data-lucide="log-out"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div class="page-header">
+                    <div>
+                        <h1 th:text="'Welcome back, ' + ${user.username} + '!'">Welcome back!</h1>
+                        <p class="text-muted">Here's what's happening in your neighborhood.</p>
+                    </div>
+                    <a th:href="@{/request-help.html}" class="btn btn-primary">
+                        <i data-lucide="hand-helping"></i>
+                        Request Help
+                    </a>
+                </div>
+
+                <div class="tabs">
+                    <div class="tabs-list">
+                        <button class="tab-trigger active" data-tab="requests">My Requests</button>
+                        <button class="tab-trigger" data-tab="volunteering">Volunteering</button>
+                        <button class="tab-trigger" data-tab="community">Community</button>
+                    </div>
+
+                    <!-- My Requests Tab -->
+                    <div class="tab-content active" id="requests-tab">
+                        <div class="card-grid">
+                            <!-- Active Requests Card -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Active Requests</h2>
+                                    <p class="card-description">Help you've requested from neighbors</p>
+                                </div>
+                                <div class="card-content" id="requested-tasks">
+                                    <!-- <div class="request-card">
+                                        <div class="request-header">
+                                            <h3>Grocery Delivery</h3> 
+                                            <span class="badge badge-primary">Matched</span>
+                                        </div>
+                                        <p class="request-description">Need help picking up groceries from Whole Foods
+                                        </p>
+                                        <div class="request-meta">
+                                            <div class="meta-item">
+                                                <i data-lucide="clock"></i>
+                                                <span>Tomorrow, 2:00 PM</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <i data-lucide="users"></i>
+                                                <span>Volunteer: John Smith</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="request-card">
+                                        <div class="request-header">
+                                            <h3>Lawn Mowing</h3>
+                                            <span class="badge badge-outline">Pending</span>
+                                        </div>
+                                        <p class="request-description">Looking for help with mowing my front lawn</p>
+                                        <div class="request-meta">
+                                            <div class="meta-item">
+                                                <i data-lucide="clock"></i>
+                                                <span>Saturday, 10:00 AM</span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-outline btn-full">View All Requests</button>
+                                </div>
+                            </div>
+
+                            <!-- Upcoming Help Card -->
+                            <!-- <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Upcoming Help</h2>
+                                    <p class="card-description">Scheduled assistance from volunteers</p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="request-card">
+                                        <div class="request-header">
+                                            <h3>Grocery Delivery</h3>
+                                            <span class="badge badge-primary">Confirmed</span>
+                                        </div>
+                                        <div class="request-meta">
+                                            <div class="meta-item">
+                                                <i data-lucide="users"></i>
+                                                <span>Volunteer: John Smith</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <i data-lucide="calendar"></i>
+                                                <span>Tomorrow, 2:00 PM</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-outline btn-full">View Calendar</button>
+                                </div>
+                            </div> -->
+
+                            <!-- Recent Activity Card -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Recent Activity</h2>
+                                    <p class="card-description">Latest updates on your requests</p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="activity-card">
+                                        <div class="activity-icon">
+                                            <i data-lucide="message-square"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <h3>New message from John</h3>
+                                            <p>Regarding your grocery delivery request</p>
+                                            <p class="activity-time">2 hours ago</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="activity-card">
+                                        <div class="activity-icon">
+                                            <i data-lucide="hand-helping"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <h3>Request completed</h3>
+                                            <p>Dog walking with Sarah</p>
+                                            <p class="activity-time">Yesterday</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="activity-card">
+                                        <div class="activity-icon">
+                                            <i data-lucide="users"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <h3>New volunteer match</h3>
+                                            <p>John Smith for grocery delivery</p>
+                                            <p class="activity-time">Yesterday</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-outline btn-full">View All Activity</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Volunteering Tab -->
+                    <div class="tab-content" id="volunteering-tab">
+                        <div class="card-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">My Volunteer Tasks</h2>
+                                    <p class="card-description">Help you've offered to neighbors</p>
+                                </div>
+                                <div class="card-content" id="volunteered-tasks">
+                                    <!-- <div class="request-card">
+                                        <div class="request-header">
+                                            <h3>Grocery Shopping</h3>
+                                            <span class="badge badge-primary">Confirmed</span>
+                                        </div>
+                                        <p class="request-description">Help Mary with her weekly grocery shopping</p>
+                                        <div class="request-meta">
+                                            <div class="meta-item">
+                                                <i data-lucide="clock"></i>
+                                                <span>Friday, 3:00 PM</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <i data-lucide="users"></i>
+                                                <span>Volunteer: You</span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-outline btn-full">View All Tasks</button>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Available Opportunities</h2>
+                                    <p class="card-description">Neighbors who need your help</p>
+                                </div>
+                                <div class="card-content" id="available-requests">
+                                    <!-- <div class="request-card">
+                                        <div class="request-header">
+                                            <h3>Tech Support</h3>
+                                            <span class="badge badge-outline">Needs Volunteer</span>
+                                        </div>
+                                        <p class="request-description">Help setting up a new laptop and printer</p>
+                                        <div class="request-meta">
+                                            <div class="meta-item">
+                                                <i data-lucide="clock"></i>
+                                                <span>Saturday, 11:00 AM</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <i data-lucide="users"></i>
+                                                <span>Requested by: Robert Chen</span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <!-- <div class="request-card">
+                                        <div class="request-header">
+                                            <h3>Furniture Assembly</h3>
+                                            <span class="badge badge-outline">Needs Volunteer</span>
+                                        </div>
+                                        <p class="request-description">Need help assembling a bookshelf</p>
+                                        <div class="request-meta">
+                                            <div class="meta-item">
+                                                <i data-lucide="clock"></i>
+                                                <span>Sunday, 2:00 PM</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <i data-lucide="users"></i>
+                                                <span>Requested by: Lisa Johnson</span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-outline btn-full">Find More Opportunities</button>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Impact Stats</h2>
+                                    <p class="card-description">Your contribution to the community</p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="stats-grid">
+                                        <div class="stat-box">
+                                            <p class="stat-value" th:text="${user.workedTasks.size()}"></p>
+                                            <p class="stat-label">Tasks Completed</p>
+                                        </div>
+                                        <div class="stat-box">
+                                            <p class="stat-value" th:text="${user.workedTasks.size()}"></p>
+                                            <p class="stat-label">Neighbors Helped</p>
+                                        </div>
+                                        <div class="stat-box">
+                                            <p class="stat-value">4.9</p>
+                                            <p class="stat-label">Average Rating</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer">
+                                    <button class="btn btn-outline btn-full">View Detailed Stats</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Community Tab -->
+                    <div class="tab-content" id="community-tab">
+                        <div class="card-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Community Stats</h2>
+                                    <p class="card-description">Activity in your neighborhood</p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="stats-grid">
+                                        <div class="stat-box">
+                                            <p class="stat-value">87</p>
+                                            <p class="stat-label">Active Neighbors</p>
+                                        </div>
+                                        <div class="stat-box">
+                                            <p class="stat-value">42</p>
+                                            <p class="stat-label">Open Requests</p>
+                                        </div>
+                                        <div class="stat-box">
+                                            <p class="stat-value">156</p>
+                                            <p class="stat-label">Tasks Completed</p>
+                                        </div>
+                                        <div class="stat-box">
+                                            <p class="stat-value">35</p>
+                                            <p class="stat-label">Active Volunteers</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-outline btn-full">View Community Page</button>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Top Volunteers</h2>
+                                    <p class="card-description">Most active helpers in your area</p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="volunteer-card">
+                                        <div class="volunteer-info">
+                                            <div class="avatar">
+                                                <img src="https://via.placeholder.com/32" alt="Sarah Johnson">
+                                                <div class="avatar-fallback">SJ</div>
+                                            </div>
+                                            <div>
+                                                <h3>Sarah Johnson</h3>
+                                                <p>24 tasks completed</p>
+                                            </div>
+                                        </div>
+                                        <div class="volunteer-rating">
+                                            <i data-lucide="star" class="star-filled"></i>
+                                            <span>4.9</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="volunteer-card">
+                                        <div class="volunteer-info">
+                                            <div class="avatar">
+                                                <img src="https://via.placeholder.com/32" alt="Michael Chen">
+                                                <div class="avatar-fallback">MC</div>
+                                            </div>
+                                            <div>
+                                                <h3>Michael Chen</h3>
+                                                <p>18 tasks completed</p>
+                                            </div>
+                                        </div>
+                                        <div class="volunteer-rating">
+                                            <i data-lucide="star" class="star-filled"></i>
+                                            <span>4.8</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="volunteer-card">
+                                        <div class="volunteer-info">
+                                            <div class="avatar">
+                                                <img src="https://via.placeholder.com/32" alt="Emily Rodriguez">
+                                                <div class="avatar-fallback">ER</div>
+                                            </div>
+                                            <div>
+                                                <h3>Emily Rodriguez</h3>
+                                                <p>15 tasks completed</p>
+                                            </div>
+                                        </div>
+                                        <div class="volunteer-rating">
+                                            <i data-lucide="star" class="star-filled"></i>
+                                            <span>4.7</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-outline btn-full">View All Volunteers</button>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Upcoming Events</h2>
+                                    <p class="card-description">Community gatherings and activities</p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="event-card">
+                                        <h3>Neighborhood Cleanup</h3>
+                                        <p>Join us to clean up the local park</p>
+                                        <div class="event-meta">
+                                            <div class="meta-item">
+                                                <i data-lucide="calendar"></i>
+                                                <span>This Saturday, 9:00 AM</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <i data-lucide="map-pin"></i>
+                                                <span>Maple Street Park</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="event-card">
+                                        <h3>Volunteer Training</h3>
+                                        <p>Learn how to be an effective volunteer</p>
+                                        <div class="event-meta">
+                                            <div class="meta-item">
+                                                <i data-lucide="calendar"></i>
+                                                <span>Next Tuesday, 6:00 PM</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <i data-lucide="map-pin"></i>
+                                                <span>Community Center</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-outline btn-full">View All Events</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

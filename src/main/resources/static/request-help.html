@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Help - Neighborly</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-header">
+        <div class="logo">
+          <i data-lucide="hand-helping"></i>
+          <h1>Neighborly</h1>
+        </div>
+      </div>
+      <div class="sidebar-separator"></div>
+      <div class="sidebar-content">
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Main</div>
+          <div class="sidebar-menu">
+            <a href="../templates/index.html" class="sidebar-menu-item">
+              <i data-lucide="home"></i>
+              <span>Dashboard</span>
+            </a>
+            <a href="request-help.html" class="sidebar-menu-item active">
+              <i data-lucide="hand-helping"></i>
+              <span>Request Help</span>
+            </a>
+            <!-- <a href="volunteer.html" class="sidebar-menu-item">
+              <i data-lucide="users"></i>
+              <span>Volunteer</span>
+            </a>
+            <a href="messages.html" class="sidebar-menu-item">
+              <i data-lucide="message-square"></i>
+              <span>Messages</span>
+            </a>
+            <a href="calendar.html" class="sidebar-menu-item">
+              <i data-lucide="calendar"></i>
+              <span>Calendar</span>
+            </a> -->
+            <a href="reviews.html" class="sidebar-menu-item">
+              <i data-lucide="star"></i>
+              <span>Reviews</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-separator"></div>
+        
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Account</div>
+          <div class="sidebar-menu">
+            <a href="profile.html" class="sidebar-menu-item">
+              <i data-lucide="user"></i>
+              <span>Profile</span>
+            </a>
+            <a href="settings.html" class="sidebar-menu-item">
+              <i data-lucide="settings"></i>
+              <span>Settings</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="avatar">
+            <img src="https://via.placeholder.com/32" alt="User">
+            <div class="avatar-fallback">JD</div>
+          </div>
+          <div class="user-info">
+            <p class="user-name">Jane Doe</p>
+            <p class="user-role">Volunteer</p>
+          </div>
+          <div class="user-actions">
+            <button class="icon-button" data-theme-toggle>
+              <i data-lucide="moon"></i>
+            </button>
+            <button class="icon-button">
+              <i data-lucide="log-out"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile Overlay -->
+    <div class="overlay" data-overlay></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <div class="page-header">
+          <div>
+            <h1>Request Help</h1>
+            <p class="text-muted">Fill out the form below to request assistance from a neighbor.</p>
+          </div>
+          <button class="mobile-menu-btn" data-menu-toggle>
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-column">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Request Details</h2>
+                <p class="card-description">Provide information about the help you need</p>
+              </div>
+              <div class="card-content">
+                <form id="request-form">
+                  <div class="form-group">
+                    <label for="title">Request Title</label>
+                    <input type="text" id="title" placeholder="E.g., Grocery Shopping, Lawn Mowing, etc." required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" required>
+                      <option value="" disabled selected>Select a category</option>
+                      <option value="errands">Errands & Shopping</option>
+                      <option value="yardwork">Yard Work</option>
+                      <option value="housework">Housework</option>
+                      <option value="transportation">Transportation</option>
+                      <option value="tech">Tech Support</option>
+                      <option value="petcare">Pet Care</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" placeholder="Please describe what you need help with in detail..." rows="5" required></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label>When do you need help?</label>
+                    <div class="form-row">
+                      <div class="form-group half">
+                        <label for="date" class="small-label">Date</label>
+                        <input type="date" id="date" required>
+                      </div>
+                      <div class="form-group half">
+                        <label for="time" class="small-label">Time</label>
+                        <select id="time" required>
+                          <option value="" disabled selected>Select time</option>
+                          <option value="morning">Morning (8AM - 12PM)</option>
+                          <option value="afternoon">Afternoon (12PM - 5PM)</option>
+                          <option value="evening">Evening (5PM - 9PM)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Urgency</label>
+                    <div class="radio-group">
+                      <div class="radio-option">
+                        <input type="radio" id="urgency-low" name="urgency" value="low">
+                        <label for="urgency-low">Low - Within the next week</label>
+                      </div>
+                      <div class="radio-option">
+                        <input type="radio" id="urgency-normal" name="urgency" value="normal" checked>
+                        <label for="urgency-normal">Normal - Within the next few days</label>
+                      </div>
+                      <div class="radio-option">
+                        <input type="radio" id="urgency-high" name="urgency" value="high">
+                        <label for="urgency-high">High - As soon as possible</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="duration">Estimated Duration</label>
+                    <select id="duration" required>
+                      <option value="" disabled selected>Select duration</option>
+                      <option value="30min">Less than 30 minutes</option>
+                      <option value="1hour">30 minutes - 1 hour</option>
+                      <option value="2hours">1 - 2 hours</option>
+                      <option value="3hours">2 - 3 hours</option>
+                      <option value="4hours">More than 3 hours</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Location</h2>
+                <p class="card-description">Where will this help be needed?</p>
+              </div>
+              <div class="card-content">
+                <form>
+                  <div class="form-group checkbox-group">
+                    <input type="checkbox" id="use-profile-address">
+                    <label for="use-profile-address">Use my profile address</label>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" placeholder="123 Main St" required>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group half">
+                      <label for="city">City</label>
+                      <input type="text" id="city" placeholder="City" required>
+                    </div>
+                    <div class="form-group half">
+                      <label for="zip">ZIP Code</label>
+                      <input type="text" id="zip" placeholder="ZIP Code" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="location-notes">Location Notes</label>
+                    <textarea id="location-notes" placeholder="Any special instructions for finding your location..." rows="3"></textarea>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-column">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Volunteer Preferences</h2>
+                <p class="card-description">Specify any preferences for who helps you</p>
+              </div>
+              <div class="card-content">
+                <form>
+                  <div class="form-group">
+                    <label>Volunteer Requirements</label>
+                    <div class="checkbox-group">
+                      <div class="checkbox-option">
+                        <input type="checkbox" id="has-car">
+                        <label for="has-car">Must have a car</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" id="has-experience">
+                        <label for="has-experience">Has experience with this task</label>
+                      </div>
+                      <div class="checkbox-option">
+                        <input type="checkbox" id="background-check">
+                        <label for="background-check">Has completed background check</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-separator"></div>
+
+                  <div class="form-group">
+                    <label for="preferred-volunteers">Preferred Volunteers</label>
+                    <select id="preferred-volunteers">
+                      <option value="none">No preference</option>
+                      <option value="previous">Previous volunteers only</option>
+                      <option value="specific">Specific volunteer</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Additional Information</h2>
+                <p class="card-description">Any other details that might help volunteers</p>
+              </div>
+              <div class="card-content">
+                <form>
+                  <div class="form-group">
+                    <label for="special-instructions">Special Instructions</label>
+                    <textarea id="special-instructions" placeholder="Any other information that might be helpful..." rows="5"></textarea>
+                  </div>
+
+                  <div class="info-box">
+                    <i data-lucide="info"></i>
+                    <div>
+                      <p class="info-title">Privacy Note</p>
+                      <p class="info-text">
+                        Your request will be visible to verified volunteers in your neighborhood. Personal information
+                        like your full address will only be shared with the volunteer who accepts your request.
+                      </p>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="card-footer">
+                <button type="submit" form="request-form" class="btn btn-primary btn-full">Submit Request</button>
+                <button class="btn btn-outline btn-full">Save as Draft</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+      <script src="js/request.js"></script>
+</body>
+
+</html>

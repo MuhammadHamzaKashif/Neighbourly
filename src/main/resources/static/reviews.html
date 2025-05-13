@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviews - Neighborly</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i data-lucide="hand-helping"></i>
+          <h1>Neighborly</h1>
+        </div>
+      </div>
+      <div class="sidebar-separator"></div>
+      <div class="sidebar-content">
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Main</div>
+          <div class="sidebar-menu">
+            <a href="../templates/index.html" class="sidebar-menu-item">
+              <i data-lucide="home"></i>
+              <span>Dashboard</span>
+            </a>
+            <a href="request-help.html" class="sidebar-menu-item">
+              <i data-lucide="hand-helping"></i>
+              <span>Request Help</span>
+            </a>
+            <!-- <a href="volunteer.html" class="sidebar-menu-item">
+              <i data-lucide="users"></i>
+              <span>Volunteer</span>
+            </a> -->
+            <!-- <a href="messages.html" class="sidebar-menu-item">
+              <i data-lucide="message-square"></i>
+              <span>Messages</span>
+            </a> -->
+            <!-- <a href="calendar.html" class="sidebar-menu-item">
+              <i data-lucide="calendar"></i>
+              <span>Calendar</span>
+            </a> -->
+            <a href="reviews.html" class="sidebar-menu-item active">
+              <i data-lucide="star"></i>
+              <span>Reviews</span>
+            </a>
+          </div>
+        </div>
+        
+        <div class="sidebar-separator"></div>
+        
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Account</div>
+          <div class="sidebar-menu">
+            <a href="profile.html" class="sidebar-menu-item">
+              <i data-lucide="user"></i>
+              <span>Profile</span>
+            </a>
+            <a href="settings.html" class="sidebar-menu-item">
+              <i data-lucide="settings"></i>
+              <span>Settings</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="avatar">
+            <img src="https://via.placeholder.com/32" alt="User">
+            <div class="avatar-fallback">JD</div>
+          </div>
+          <div class="user-info">
+            <p class="user-name">Jane Doe</p>
+            <p class="user-role">Volunteer</p>
+          </div>
+          <div class="user-actions">
+            <button class="icon-button" id="theme-toggle">
+              <i data-lucide="moon"></i>
+            </button>
+            <button class="icon-button">
+              <i data-lucide="log-out"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <div class="page-header">
+          <div>
+            <h1>Reviews</h1>
+            <p class="text-muted">Leave feedback for your neighbors and view your reviews</p>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <div class="tabs-list">
+            <button class="tab-trigger active" data-tab="write-review">Write a Review</button>
+            <button class="tab-trigger" data-tab="my-reviews">My Reviews</button>
+            <button class="tab-trigger" data-tab="received-reviews">Reviews I've Received</button>
+          </div>
+          
+          <!-- Write a Review Tab -->
+          <div class="tab-content active" id="write-review-tab">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Submit a Review</h2>
+                <p class="card-description">Share your experience with a neighbor who helped you or whom you helped</p>
+              </div>
+              <div class="card-content">
+                <form id="review-form">
+                  <div class="form-group">
+                    <label for="task-id">Task ID</label>
+                    <select id="task-id" required>
+                      <option value="" disabled selected>Select a completed task</option>
+                      <option value="task-123">Task #123 - Grocery Delivery (John Smith)</option>
+                    </select>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group half">
+                      <label for="reviewer-username">Your Username</label>
+                      <input type="text" id="reviewer-username" value="">
+                    </div>
+                    <div class="form-group half">
+                      <label for="reviewee-username">Person You're Reviewing</label>
+                      <input type="text" id="reviewee-username" placeholder="Username will be filled automatically" readonly>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Rating</label>
+                    <div class="star-rating">
+                      <input type="radio" id="star5" name="rating" value="5" required>
+                      <label for="star5" title="5 stars"><i data-lucide="star"></i></label>
+                      
+                      <input type="radio" id="star4" name="rating" value="4">
+                      <label for="star4" title="4 stars"><i data-lucide="star"></i></label>
+                      
+                      <input type="radio" id="star3" name="rating" value="3">
+                      <label for="star3" title="3 stars"><i data-lucide="star"></i></label>
+                      
+                      <input type="radio" id="star2" name="rating" value="2">
+                      <label for="star2" title="2 stars"><i data-lucide="star"></i></label>
+                      
+                      <input type="radio" id="star1" name="rating" value="1">
+                      <label for="star1" title="1 star"><i data-lucide="star"></i></label>
+                    </div>
+                    <div class="error-message" id="rating-error"></div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="review-comment">Review Comment</label>
+                    <textarea id="review-comment" rows="5" placeholder="Share your experience with this person..." required></textarea>
+                    <div class="error-message" id="comment-error"></div>
+                  </div>
+
+                  <div class="form-group checkbox-group">
+                    <input type="checkbox" id="public-review" checked>
+                    <label for="public-review">Make this review public</label>
+                  </div>
+
+                  <div class="info-box">
+                    <i data-lucide="info"></i>
+                    <div>
+                      <p class="info-title">Review Guidelines</p>
+                      <p class="info-text">
+                        Please be honest and respectful in your review. Focus on the specific task and interaction.
+                        Avoid personal attacks or sharing private information. All reviews are moderated.
+                      </p>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="card-footer">
+                <button type="submit" form="review-form" class="btn btn-primary">Submit Review</button>
+                <button type="reset" form="review-form" class="btn btn-outline">Clear Form</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- My Reviews Tab -->
+          <div class="tab-content" id="my-reviews-tab">
+            <div class="card-grid">
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="card-title">Reviews I've Written</h2>
+                  <p class="card-description">Feedback you've provided to others</p>
+                </div>
+                <div class="card-content">
+                  <div class="review-list">
+                    <div class="review-item">
+                      <div class="review-header">
+                        <div class="review-user">
+                          <div class="avatar">
+                            <img src="https://via.placeholder.com/32" alt="John Smith">
+                            <div class="avatar-fallback">JS</div>
+                          </div>
+                          <div>
+                            <h3>John Smith</h3>
+                            <p class="review-task">Grocery Delivery (Task #123)</p>
+                          </div>
+                        </div>
+                        <div class="review-rating">
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <span>5.0</span>
+                        </div>
+                      </div>
+                      <p class="review-comment">John was extremely helpful and delivered my groceries on time. He was careful with fragile items and very friendly. Would definitely recommend!</p>
+                      <p class="review-date">2 days ago</p>
+                    </div>
+
+                    <div class="review-item">
+                      <div class="review-header">
+                        <div class="review-user">
+                          <div class="avatar">
+                            <img src="https://via.placeholder.com/32" alt="Sarah Johnson">
+                            <div class="avatar-fallback">SJ</div>
+                          </div>
+                          <div>
+                            <h3>Sarah Johnson</h3>
+                            <p class="review-task">Dog Walking (Task #456)</p>
+                          </div>
+                        </div>
+                        <div class="review-rating">
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star"></i>
+                          <span>4.0</span>
+                        </div>
+                      </div>
+                      <p class="review-comment">Sarah took great care of my dog while I was away. She sent me updates and photos. My dog seemed very happy when I got back.</p>
+                      <p class="review-date">1 week ago</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button class="btn btn-outline btn-full">View All Reviews</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Reviews I've Received Tab -->
+          <div class="tab-content" id="received-reviews-tab">
+            <div class="card-grid">
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="card-title">Reviews About Me</h2>
+                  <p class="card-description">Feedback others have provided about you</p>
+                </div>
+                <div class="card-content">
+                  <div class="review-summary">
+                    <div class="review-average">
+                      <span class="average-rating">4.8</span>
+                      <div class="average-stars">
+                        <i data-lucide="star" class="star-filled"></i>
+                        <i data-lucide="star" class="star-filled"></i>
+                        <i data-lucide="star" class="star-filled"></i>
+                        <i data-lucide="star" class="star-filled"></i>
+                        <i data-lucide="star" class="star-half"></i>
+                      </div>
+                      <span class="review-count">Based on 12 reviews</span>
+                    </div>
+                    <div class="rating-breakdown">
+                      <div class="rating-bar">
+                        <span class="rating-label">5 stars</span>
+                        <div class="progress-bar">
+                          <div class="progress" style="width: 75%"></div>
+                        </div>
+                        <span class="rating-count">9</span>
+                      </div>
+                      <div class="rating-bar">
+                        <span class="rating-label">4 stars</span>
+                        <div class="progress-bar">
+                          <div class="progress" style="width: 17%"></div>
+                        </div>
+                        <span class="rating-count">2</span>
+                      </div>
+                      <div class="rating-bar">
+                        <span class="rating-label">3 stars</span>
+                        <div class="progress-bar">
+                          <div class="progress" style="width: 8%"></div>
+                        </div>
+                        <span class="rating-count">1</span>
+                      </div>
+                      <div class="rating-bar">
+                        <span class="rating-label">2 stars</span>
+                        <div class="progress-bar">
+                          <div class="progress" style="width: 0%"></div>
+                        </div>
+                        <span class="rating-count">0</span>
+                      </div>
+                      <div class="rating-bar">
+                        <span class="rating-label">1 star</span>
+                        <div class="progress-bar">
+                          <div class="progress" style="width: 0%"></div>
+                        </div>
+                        <span class="rating-count">0</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="review-list">
+                    <div class="review-item">
+                      <div class="review-header">
+                        <div class="review-user">
+                          <div class="avatar">
+                            <img src="https://via.placeholder.com/32" alt="Michael Chen">
+                            <div class="avatar-fallback">MC</div>
+                          </div>
+                          <div>
+                            <h3>Michael Chen</h3>
+                            <p class="review-task">Tech Support (Task #789)</p>
+                          </div>
+                        </div>
+                        <div class="review-rating">
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <span>5.0</span>
+                        </div>
+                      </div>
+                      <p class="review-comment">Jane was incredibly patient and knowledgeable. She helped me set up my new computer and printer and explained everything clearly. I would definitely ask for her help again!</p>
+                      <p class="review-date">3 days ago</p>
+                    </div>
+
+                    <div class="review-item">
+                      <div class="review-header">
+                        <div class="review-user">
+                          <div class="avatar">
+                            <img src="https://via.placeholder.com/32" alt="Emily Rodriguez">
+                            <div class="avatar-fallback">ER</div>
+                          </div>
+                          <div>
+                            <h3>Emily Rodriguez</h3>
+                            <p class="review-task">Furniture Assembly (Task #321)</p>
+                          </div>
+                        </div>
+                        <div class="review-rating">
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star" class="star-filled"></i>
+                          <i data-lucide="star"></i>
+                          <span>4.0</span>
+                        </div>
+                      </div>
+                      <p class="review-comment">Jane helped me assemble my new bookshelf. She was on time and did a great job. The only reason for 4 stars instead of 5 is that it took a bit longer than expected.</p>
+                      <p class="review-date">1 week ago</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button class="btn btn-outline btn-full">View All Reviews</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- <script src="script.js"></script> -->
+  <script src="js/reviews.js"></script>
+</body>
+</html>
+

@@ -383,8 +383,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     nextPageButton.classList.add("active")
                 }
             }
+<<<<<<< Updated upstream
 
             // In a real application, you would load the next page of data here
+=======
+>>>>>>> Stashed changes
             showNotification("Loading page data...", "success")
         })
     })

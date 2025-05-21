@@ -176,8 +176,7 @@ if (logoutBtn) {
                 credentials: "include"
             });
             if (response.ok) {
-                // Redirect to login or home page
-                window.location.href = "login.html"; // Change to your actual login route
+                window.location.href = "login.html";
             } else {
                 console.error("Logout failed");
             }
@@ -197,7 +196,6 @@ if (logoutBtn) {
 
         // console.log("Auth test status:", testAuth.status);
 
-        // Then redirect
         window.location.href = "http://localhost:8080/dashboard/admin";
     }
 
@@ -293,23 +291,14 @@ if (logoutBtn) {
 
 
 
-
-
-
-
-
-
     loadTasks();
     renderAvailableTasks();
-    // Initialize Lucide icons
-    const lucide = window.lucide // Declare lucide variable
+    const lucide = window.lucide
     lucide.createIcons()
 
-    // Theme toggle functionality
     const themeToggle = document.getElementById("theme-toggle")
     const themeIcon = themeToggle.querySelector("i")
 
-    // Check for saved theme preference or use system preference
     const savedTheme = localStorage.getItem("theme")
     const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
     //   if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
@@ -324,7 +313,6 @@ if (logoutBtn) {
     //       [themeIcon.getAttribute("data-lucide")]: themeIcon,
     //     },
     //   })
-    // Toggle theme when button is clicked
     themeToggle.addEventListener("click", () => {
         document.body.classList.toggle("dark")
 
@@ -336,7 +324,6 @@ if (logoutBtn) {
             themeIcon.setAttribute("data-lucide", "moon")
         }
 
-        // Reinitialize the icon after changing its type
         lucide.createIcons({
             icons: {
                 [themeIcon.getAttribute("data-lucide")]: themeIcon,
@@ -344,40 +331,34 @@ if (logoutBtn) {
         })
     })
 
-    // Tab functionality
     const tabTriggers = document.querySelectorAll(".tab-trigger")
     const tabContents = document.querySelectorAll(".tab-content")
     tabTriggers.forEach((trigger) => {
         trigger.addEventListener("click", () => {
-            // Remove active class from all triggers and contents
             tabTriggers.forEach((t) => t.classList.remove("active"))
             tabContents.forEach((c) => c.classList.remove("active"))
 
-            // Add active class to clicked trigger and corresponding content
             trigger.classList.add("active")
             const tabId = trigger.getAttribute("data-tab")
             document.getElementById(`${tabId}-tab`).classList.add("active")
         })
     })
 
-    // Form functionality for request-help page
     const useProfileAddressCheckbox = document.getElementById("use-profile-address")
     if (useProfileAddressCheckbox) {
         const addressFields = document.querySelectorAll("#address, #city, #zip")
 
         useProfileAddressCheckbox.addEventListener("change", function () {
             if (this.checked) {
-                // Fill with dummy profile data
                 document.getElementById("address").value = "123 Oak Street"
                 document.getElementById("city").value = "Springfield"
                 document.getElementById("zip").value = "12345"
 
-                // Disable fields
+
                 addressFields.forEach((field) => {
                     field.setAttribute("disabled", "disabled")
                 })
             } else {
-                // Clear and enable fields
                 addressFields.forEach((field) => {
                     field.value = ""
                     field.removeAttribute("disabled")
@@ -386,7 +367,6 @@ if (logoutBtn) {
         })
     }
 
-    // Form submission (prevent default for demo)
     //   const forms = document.querySelectorAll("form")
     //   forms.forEach((form) => {
     //     form.addEventListener("submit", (e) => {
@@ -395,7 +375,6 @@ if (logoutBtn) {
     //     })
     //   })
 
-    // Mobile sidebar toggle
     const sidebarToggle = document.createElement("button")
     sidebarToggle.className = "sidebar-toggle"
     sidebarToggle.innerHTML = '<i data-lucide="menu"></i>'
@@ -410,8 +389,6 @@ if (logoutBtn) {
     sidebarToggle.addEventListener("click", () => {
         document.querySelector(".sidebar").classList.toggle("open")
     })
-
-    // Close sidebar when clicking outside on mobile
     document.addEventListener("click", (e) => {
         const sidebar = document.querySelector(".sidebar")
         const sidebarToggleBtn = document.querySelector(".sidebar-toggle")
@@ -426,8 +403,6 @@ if (logoutBtn) {
             sidebar.classList.remove("open")
         }
     })
-
-    // Add responsive styles for mobile
     const style = document.createElement("style")
     style.textContent = `
     @media (max-width: 767px) {

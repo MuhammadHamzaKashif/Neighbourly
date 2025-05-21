@@ -1,12 +1,9 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    // Initialize Lucide icons
     const lucide = window.lucide;
     lucide.createIcons();
 
-    // Fetch and populate tasks when page loads
     await populateTaskDropdown();
 
-    // Task selection logic
     const taskSelect = document.getElementById("task-id");
     const revieweeInput = document.getElementById("reviewee-username");
     const reviewerInput = document.getElementById("reviewer-username");
@@ -82,20 +79,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const tasks = await response.json();
                 const taskSelect = document.getElementById("task-id");
 
-                // Clear existing options except the first one
                 while (taskSelect.options.length > 1) {
                     taskSelect.remove(1);
                 }
 
-                // Add new options for each task
                 tasks.forEach(async task => {
                     const volunteer = await getVolunteerById(task.id);
-                    if (task.status === 'Completed') { // Only show completed tasks
+                    if (task.status === 'Completed') {
                         const option = document.createElement('option');
                         option.value = task.id;
                         option.textContent = `Task #${task.id} - ${task.title} (${volunteer.username})`;
 
-                        // Store volunteer username in data attribute
                         if (volunteer) {
                             option.setAttribute('data-volunteer', volunteer.username);
                             option.setAttribute('data-volunteer-id', volunteer.id);
@@ -107,7 +101,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     }
                 });
 
-                // Also fetch volunteered tasks if needed
                 //await populateVolunteeredTasks();
             } else {
                 console.error('Failed to fetch tasks');
@@ -149,21 +142,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-    //alert(".......")
-    // Star rating functionality
+
 
     //alert("NNNNNNNNNNN")
-    // Handle click events
-    // Star rating functionality
+
     const starLabels = document.querySelectorAll(".star-rating label");
 
     if (starLabels.length > 0) {
-        // Wait for Lucide icons to be created
         setTimeout(() => {
-            // Add hover effect
             starLabels.forEach((label) => {
                 const icon = label.querySelector("i");
-                if (!icon) return; // Skip if no icon found
+                if (!icon) return;
 
                 label.addEventListener("mouseenter", function () {
                     const currentStar = this.getAttribute("for").replace("star", "");
@@ -208,7 +197,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     });
                 });
             });
-        }, 100); // Small delay to ensure icons are created
+        }, 100);
     }
 
     console.log('Star labels:', starLabels);
@@ -216,14 +205,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log('Label:', label, 'Icon:', label.querySelector("i"));
     });
     //alert("MMMMMMMM")
-    // Form validation
     const reviewForm = document.getElementById("review-form")
     if (reviewForm) {
         reviewForm.addEventListener("submit", async (e) => {
             e.preventDefault()
             let isValid = true
 
-            // Validate task selection
             const taskId = document.getElementById("task-id")
             if (!taskId.value) {
                 isValid = false
@@ -232,7 +219,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 taskId.classList.remove("input-error")
             }
 
-            // Validate rating
             const ratingInputs = document.querySelectorAll('input[name="rating"]')
             const ratingError = document.getElementById("rating-error")
             let ratingSelected = false
@@ -252,7 +238,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 ratingError.textContent = ""
             }
 
-            // Validate comment
             const comment = document.getElementById("review-comment")
             const commentError = document.getElementById("comment-error")
 
@@ -298,9 +283,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     alert("Error while submitting")
                 }
 
-                // Simulate form submission
-
-                // Reset star ratings visual state
 
             }
         })

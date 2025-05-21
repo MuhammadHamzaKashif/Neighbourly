@@ -34,7 +34,6 @@ public class RegisterController {
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest user, HttpServletRequest request) {
         ResponseEntity<?> response = service.loginUser(user.getEmail(), user.getPassword(), request);
 
-        // If login successful, return the dashboard URL
         if (response.getStatusCode().is2xxSuccessful()) {
                 return ResponseEntity.ok()
                         .body(Collections.singletonMap("redirectUrl", "http://localhost:8080/dashboard"));
@@ -43,7 +42,7 @@ public class RegisterController {
     }
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
-        request.getSession().invalidate(); // Invalidate the user's session
+        request.getSession().invalidate();
         return ResponseEntity.ok().body(Collections.singletonMap("message", "Logged out successfully"));
     }
 

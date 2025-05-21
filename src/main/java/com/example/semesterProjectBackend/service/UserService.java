@@ -49,19 +49,17 @@ public class UserService {
                     new UsernamePasswordAuthenticationToken(email, password)
             );
 
-            // Create new session (invalidate old one if exists)
             HttpSession session = request.getSession(false);
             if (session != null) session.invalidate();
             session = request.getSession(true);
 
-            // MANUALLY set security context
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             context.setAuthentication(authentication);
             SecurityContextHolder.setContext(context);
             session.setAttribute("SPRING_SECURITY_CONTEXT", context);
 
-            System.out.println("🔥 Login successful - Session: " + session.getId());
-            System.out.println("   Authenticated as: " + authentication.getName());
+            System.out.println(" Login successful - Session: " + session.getId());
+            System.out.println("  Authenticated as: " + authentication.getName());
 
             return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl", "/dashboard"));
         } catch(BadCredentialsException e) {

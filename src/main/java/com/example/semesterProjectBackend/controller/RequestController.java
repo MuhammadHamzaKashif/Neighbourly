@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/requests")
-@CrossOrigin(origins = "http://127.0.0.1:5500") // Add specific frontend URL in production!
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class RequestController {
 
     @Autowired
@@ -21,7 +21,6 @@ public class RequestController {
     @Autowired
     private UserRepository userRepository;
 
-    // POST a new request by a user
     @PostMapping("/create/{userId}")
     public Requests createRequest(@PathVariable int userId, @RequestBody Requests request) {
         System.out.println("REQUEST RECEIVED FOR CREATION ");
@@ -31,7 +30,6 @@ public class RequestController {
         return requestRepository.save(request);
     }
 
-    // GET all requests
     @GetMapping("/all")
     public List<Requests> getAllRequests() {
         return requestRepository.findAll();
@@ -41,7 +39,6 @@ public class RequestController {
         return requestRepository.findById(id).get().getRequester();
     }
 
-    // GET all requests posted by a specific user
     @GetMapping("/user/{userId}")
     public List<Requests> getRequestsByUser(@PathVariable int userId) {
         return requestRepository.findByRequesterId(userId);

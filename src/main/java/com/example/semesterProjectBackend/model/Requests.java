@@ -19,10 +19,10 @@ public class Requests {
     private String category;
     @Column(length = 2000)
     private String description;
-    private String dateNeeded;    // e.g. "2025-05-15"
-    private String timeNeeded;    // e.g. "morning", "afternoon", "evening"
-    private String urgency;       // low, normal, high
-    private String duration;      // 30min, 1hour, etc.
+    private String dateNeeded;
+    private String timeNeeded;
+    private String urgency;
+    private String duration;
 
     private String address;
     private String city;
@@ -33,7 +33,7 @@ public class Requests {
     private boolean needsExperience;
     private boolean needsBackgroundCheck;
 
-    private String volunteerPreference; // none, previous, specific
+    private String volunteerPreference;
 
     @Column(length = 2000)
     private String specialInstructions;

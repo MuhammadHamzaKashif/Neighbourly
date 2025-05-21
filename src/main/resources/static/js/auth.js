@@ -1,15 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("JS loaded!"); // Changed from alert to console.log for better UX
+  console.log("JS loaded!");
 
-  // Initialize Lucide icons
   const lucide = window.lucide;
   lucide.createIcons();
 
-  // Theme toggle functionality
   const themeToggle = document.getElementById("theme-toggle");
   const themeIcon = themeToggle.querySelector("i");
 
-  // Check for saved theme preference or use system preference
   const savedTheme = localStorage.getItem("theme");
   const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
@@ -20,14 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
     themeIcon.setAttribute("data-lucide", "moon");
   }
 
-  // Reinitialize the icon after changing its type
   lucide.createIcons({
     icons: {
       [themeIcon.getAttribute("data-lucide")]: themeIcon,
     },
   });
 
-  // Toggle theme when button is clicked
   themeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark");
 
@@ -46,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Password visibility toggle
   const passwordToggles = document.querySelectorAll(".password-toggle");
   passwordToggles.forEach((toggle) => {
     const toggleIcon = toggle.querySelector("i");
@@ -69,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Login form handling
+
   const loginForm = document.getElementById("login-form");
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
@@ -89,14 +83,12 @@ document.addEventListener("DOMContentLoaded", () => {
             email: email,
             password: password
           }),
-          credentials: 'include' // Important for session cookies
+          credentials: 'include'
         });
 
         if (response.ok) {
-          // Successful login - redirect to dashboard
           window.location.href = '/index.html';
         } else {
-          // Show error message
           const errorData = await response.json();
           errorElement.textContent = errorData.message || "Login failed";
           errorElement.style.display = 'block';
@@ -109,13 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Signup form handling
   const signupForm = document.getElementById("signup-form");
   if (signupForm) {
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirm-password");
 
-    // Password requirements check
     const reqLength = document.getElementById("req-length");
     const reqUppercase = document.getElementById("req-uppercase");
     const reqLowercase = document.getElementById("req-lowercase");
@@ -125,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
       password.addEventListener("input", () => {
         const value = password.value;
 
-        // Update requirement indicators
         reqLength.classList.toggle("requirement-met", value.length >= 8);
         reqUppercase.classList.toggle("requirement-met", /[A-Z]/.test(value));
         reqLowercase.classList.toggle("requirement-met", /[a-z]/.test(value));
@@ -144,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmPassword: confirmPassword.value
       };
 
-      // Client-side validation
       if (!validateSignupForm(formData)) {
         return;
       }
@@ -178,7 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Helper functions
   function validateSignupForm(formData) {
     let isValid = true;
     const errors = {
@@ -189,7 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
       confirmPassword: ""
     };
 
-    // First name validation
     if (!formData.username) {
       errors.username = "username is required";
       isValid = false;
@@ -201,7 +187,6 @@ document.addEventListener("DOMContentLoaded", () => {
     //   isValid = false;
     // }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email) {
       errors.email = "Email is required";
@@ -211,7 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
       isValid = false;
     }
 
-    // Password validation
     if (!formData.password) {
       errors.password = "Password is required";
       isValid = false;
@@ -229,7 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
       isValid = false;
     }
 
-    // Confirm password validation
     if (!formData.confirmPassword) {
       errors.confirmPassword = "Please confirm your password";
       isValid = false;
@@ -238,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
       isValid = false;
     }
 
-    // Update error messages in UI
+
     Object.keys(errors).forEach(field => {
       const errorElement = document.getElementById(`${field}-error`);
       if (errorElement) {
@@ -256,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
       errorElement.textContent = message;
       errorElement.style.display = 'block';
     } else {
-      alert(message); // Fallback if no error element exists
+      alert(message);
     }
   }
 });

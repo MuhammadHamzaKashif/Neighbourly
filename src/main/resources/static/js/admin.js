@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Initialize Lucide icons
     const lucide = window.lucide
     //lucide.createIcons()
     const themeToggleBtn = document.getElementById('theme-toggle');
@@ -72,32 +71,25 @@ document.addEventListener("DOMContentLoaded", () => {
                         <h3>Description</h3>
                         <p>${req.description}</p>
                     </div>
-                    <!-- More details omitted for brevity -->
                 </div>
             </div>
         `;
 
-                        // Add event listeners for approve and deny buttons
                         const approveButton = container.querySelector(`button.btn-approve[data-id="${req.id}"]`);
                         const denyButton = container.querySelector(`button.btn-deny[data-id="${req.id}"]`);
 
                         approveButton.addEventListener('click', function () {
-                            // Handle approval logic here
                             console.log(`Request #${req.id} approved.`);
-                            // For example, change the request status to 'approved' and update the UI
                             approveRequest(req.id);
                         });
 
                         denyButton.addEventListener('click', function () {
-                            // Handle denial logic here
                             console.log(`Request #${req.id} denied.`);
-                            // For example, change the request status to 'denied' and update the UI
                             denyRequest(req.id);
                         });
                     }
                 });
 
-                // Functions to handle approval and denial
                 async function approveRequest(requestId) {
                     try {
                         const response = await fetch(`/api/requests/${requestId}/approve`, {
@@ -105,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         });
 
                         if (!response.ok) {
-                            // Handle error if request was not successful
                             const errorMessage = await response.text();
                             console.error(`Failed to approve request #${requestId}: ${errorMessage}`);
                             return;
@@ -113,12 +104,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         console.log(`Request #${requestId} approved in the system.`);
 
-                        // Optionally, update the UI to reflect the approval (e.g., hide the card or change status)
                         const requestCard = document.querySelector(`.admin-request-card[data-id="${requestId}"]`);
                         if (requestCard) {
                             requestCard.querySelector('.badge').textContent = "Approved";
                             requestCard.setAttribute('data-status', 'approved');
-                            // Optionally, you could hide or disable the approve/deny buttons
                             const approveButton = requestCard.querySelector('.btn-approve');
                             const denyButton = requestCard.querySelector('.btn-deny');
                             approveButton.disabled = true;
@@ -137,7 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         });
 
                         if (!response.ok) {
-                            // Handle error if request was not successful
                             const errorMessage = await response.text();
                             console.error(`Failed to deny request #${requestId}: ${errorMessage}`);
                             return;
@@ -145,12 +133,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         console.log(`Request #${requestId} denied in the system.`);
 
-                        // Optionally, update the UI to reflect the denial (e.g., hide the card or change status)
                         const requestCard = document.querySelector(`.admin-request-card[data-id="${requestId}"]`);
                         if (requestCard) {
                             requestCard.querySelector('.badge').textContent = "Denied";
                             requestCard.setAttribute('data-status', 'denied');
-                            // Optionally, you could hide or disable the approve/deny buttons
                             const approveButton = requestCard.querySelector('.btn-approve');
                             const denyButton = requestCard.querySelector('.btn-deny');
                             approveButton.disabled = true;
@@ -171,11 +157,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // Theme toggle functionality
     const themeToggle = document.getElementById("theme-toggle")
     const themeIcon = themeToggle.querySelector("i")
 
-    // Check for saved theme preference or use system preference
     const savedTheme = localStorage.getItem("theme")
     const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
 
@@ -186,14 +170,12 @@ document.addEventListener("DOMContentLoaded", () => {
     //     themeIcon.setAttribute("data-lucide", "moon")
     // }
 
-    // Reinitialize the icon after changing its type
     lucide.createIcons({
         icons: {
             [themeIcon.getAttribute("data-lucide")]: themeIcon,
         },
     })
 
-    // Toggle theme when button is clicked
     themeToggle.addEventListener("click", () => {
         document.body.classList.toggle("dark")
 
@@ -205,7 +187,6 @@ document.addEventListener("DOMContentLoaded", () => {
             themeIcon.setAttribute("data-lucide", "moon")
         }
 
-        // Reinitialize the icon after changing its type
         lucide.createIcons({
             icons: {
                 [themeIcon.getAttribute("data-lucide")]: themeIcon,
@@ -213,7 +194,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     })
 
-    // Expand/collapse request details
     const expandButtons = document.querySelectorAll(".btn-expand")
     expandButtons.forEach((button) => {
         button.addEventListener("click", () => {
@@ -229,7 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 icon.setAttribute("data-lucide", "chevron-up")
             }
 
-            // Reinitialize the icon after changing its type
             lucide.createIcons({
                 icons: {
                     [icon.getAttribute("data-lucide")]: icon,
@@ -238,7 +217,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     })
 
-    // Approve request
     const approveButtons = document.querySelectorAll(".btn-approve")
     approveButtons.forEach((button) => {
         button.addEventListener("click", () => {
@@ -246,24 +224,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const card = button.closest(".admin-request-card")
             const badge = card.querySelector(".badge")
 
-            // Update UI
             badge.className = "badge badge-approved"
             badge.textContent = "Approved"
             card.setAttribute("data-status", "approved")
 
-            // Disable buttons
             button.disabled = true
             card.querySelector(".btn-deny").disabled = true
 
-            // Show confirmation
             showNotification(`Request #${requestId} has been approved`, "success")
 
-            // In a real application, you would send an API request here
             console.log(`Approved request ${requestId}`)
         })
     })
 
-    // Deny request
     const denyButtons = document.querySelectorAll(".btn-deny")
     denyButtons.forEach((button) => {
         button.addEventListener("click", () => {
@@ -271,24 +244,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const card = button.closest(".admin-request-card")
             const badge = card.querySelector(".badge")
 
-            // Update UI
             badge.className = "badge badge-denied"
             badge.textContent = "Denied"
             card.setAttribute("data-status", "denied")
 
-            // Disable buttons
             button.disabled = true
             card.querySelector(".btn-approve").disabled = true
 
-            // Show confirmation
             showNotification(`Request #${requestId} has been denied`, "error")
 
-            // In a real application, you would send an API request here
             console.log(`Denied request ${requestId}`)
         })
     })
 
-    // Filter requests
     const filterSelect = document.getElementById("filter-status")
     filterSelect.addEventListener("change", () => {
         const status = filterSelect.value
@@ -303,7 +271,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     })
 
-    // Search functionality
     const searchInput = document.getElementById("search-requests")
     searchInput.addEventListener("input", () => {
         const searchTerm = searchInput.value.toLowerCase()
@@ -322,40 +289,33 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     })
 
-    // Notification function
     function showNotification(message, type) {
-        // Create notification element
+
         const notification = document.createElement("div")
         notification.className = `notification notification-${type}`
 
-        // Create icon based on type
         const icon = document.createElement("i")
         icon.setAttribute("data-lucide", type === "success" ? "check-circle" : "alert-circle")
 
-        // Create message element
         const messageElement = document.createElement("span")
         messageElement.textContent = message
 
-        // Append elements
+
         notification.appendChild(icon)
         notification.appendChild(messageElement)
 
-        // Add to document
         document.body.appendChild(notification)
 
-        // Initialize icon
         lucide.createIcons({
             icons: {
                 [icon.getAttribute("data-lucide")]: icon,
             },
         })
 
-        // Show notification
         setTimeout(() => {
             notification.classList.add("show")
         }, 10)
 
-        // Hide and remove notification after 3 seconds
         setTimeout(() => {
             notification.classList.remove("show")
             setTimeout(() => {
@@ -364,7 +324,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000)
     }
 
-    // Pagination functionality (simplified for demo)
     const paginationButtons = document.querySelectorAll(".pagination-btn")
     paginationButtons.forEach((button) => {
         button.addEventListener("click", () => {
@@ -383,11 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     nextPageButton.classList.add("active")
                 }
             }
-<<<<<<< Updated upstream
 
-            // In a real application, you would load the next page of data here
-=======
->>>>>>> Stashed changes
             showNotification("Loading page data...", "success")
         })
     })

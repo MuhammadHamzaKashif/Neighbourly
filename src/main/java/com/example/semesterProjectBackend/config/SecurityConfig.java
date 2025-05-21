@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 //                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/dashboard").permitAll()  // TEMPORARY! Remove after testing
+//                        .requestMatchers("/dashboard").permitAll()
 //                        .anyRequest().authenticated()
 //                )
                 .authorizeHttpRequests(auth -> auth
@@ -47,11 +47,11 @@ public class SecurityConfig {
                         .requestMatchers("/dashboard").permitAll()
                         .anyRequest().permitAll()
                 )
-                .formLogin(form -> form.disable()) // Disable form login
-                .httpBasic(basic -> basic.disable()) // Disable basic auth
+                .formLogin(form -> form.disable())
+                .httpBasic(basic -> basic.disable())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                        .sessionFixation().migrateSession()  // Changed from 'newSession' to 'migrateSession'
+                        .sessionFixation().migrateSession()
                         .maximumSessions(1)
                         .expiredUrl("/login?expired")
                 )
@@ -96,7 +96,7 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")  // Changed from "/api/**" to "/**"
+                registry.addMapping("/**")
                         .allowedOrigins("http://127.0.0.1:5500", "http://localhost:5500")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")

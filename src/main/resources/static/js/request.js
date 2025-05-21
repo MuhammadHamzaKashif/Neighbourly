@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // === Sidebar Toggle ===
   const menuBtn = document.querySelector("[data-menu-toggle]");
   const sidebar = document.querySelector("[data-sidebar]");
   const overlay = document.querySelector("[data-overlay]");
@@ -16,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 //alert("pppppppppp")
-  // === Theme Toggle ===
   const themeToggleBtn = document.querySelector("[data-theme-toggle]");
   const html = document.documentElement;
 
@@ -35,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 //alert("oooooooo")
-  // === Lucide Icon Rendering ===
   if (typeof lucide !== "undefined") {
     lucide.createIcons();
   }
@@ -58,11 +55,10 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Failed to fetch tasks", error);
         }
     }
-  // === Form Submission ===
   document.getElementById("request-form").addEventListener("submit", async function (e) {
-  e.preventDefault(); // Stop default form submission
+  e.preventDefault();
 //alert("aaaaaaaaaaaa")
-  // Example: Collect data
+
 const requestData = {
     title: document.getElementById("title").value,
     category: document.getElementById("category").value,
@@ -96,7 +92,6 @@ const requestData = {
   const result = await response.json();
   if (response.ok) {
     alert("Request submitted successfully!");
-    // maybe redirect
   } else {
     alert("Submission failed: " + result.message);
   }

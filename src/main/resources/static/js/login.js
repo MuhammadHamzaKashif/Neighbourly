@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Initialize Lucide icons
     lucide.createIcons();
     //alert("start")
-    // Password visibility toggle
     const passwordToggle = document.querySelector(".password-toggle");
     if (passwordToggle) {
         const toggleIcon = passwordToggle.querySelector("i");
@@ -20,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     //alert("bbbbbbbbbbbbbbbbbbbbbbbb")
-    // Theme toggle functionality
     //   const themeToggle = document.getElementById("theme-toggle");
     //   if (themeToggle) {
     //     const themeIcon = themeToggle.querySelector("i");
@@ -37,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     //     }
     //     lucide.createIcons();
 
-    //     // Toggle theme when button is clicked
     //     themeToggle.addEventListener("click", () => {
     //       document.body.classList.toggle("dark");
     //       const isDark = document.body.classList.contains("dark");
@@ -47,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     //     });
     //   }
 
-    // Login form submission
     //alert("aaaaaaaaaaaaaaaaa")
 
 async function isAdmin(email) {
@@ -56,7 +51,7 @@ async function isAdmin(email) {
         if (!response.ok) throw new Error("Request failed");
 
         const result = await response.json();
-        return result; // true or false
+        return result;
     } catch (err) {
         console.error("Error checking admin status:", err);
         return false;
@@ -69,16 +64,14 @@ async function isAdmin(email) {
     //alert("..........................................");
     if (loginForm) {
         loginForm.addEventListener("submit", async (e) => {
-            e.preventDefault(); // This is CRUCIAL to prevent default form submission
-            console.log("Login form submitted"); // Debug log
+            e.preventDefault();
+            console.log("Login form submitted");
 
 
-            // Get form values
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             const errorElement = document.getElementById("login-error");
 
-            // Simple validation
             if (!email || !password) {
                 errorElement.textContent = "Please fill in all fields";
                 errorElement.style.display = "block";
@@ -96,14 +89,13 @@ async function isAdmin(email) {
                         email: email,
                         password: password
                     }),
-                    credentials: 'include' // Important for session cookies
+                    credentials: 'include'
                 });
                 //const data = await response.json();
 
                 if (response.ok) {
                     alert("Login successful, redirecting...");
 
-                    // First make a test request to verify session
                 //     if (isAdmin(email)){
                 //     const testAuth = await fetch('http://localhost:8080/dashboard/admin', {
                 //         credentials: 'include'
@@ -121,11 +113,9 @@ async function isAdmin(email) {
 
                     console.log("Auth test status:", testAuth.status);
 
-                    // Then redirect
                     window.location.href = "http://localhost:8080/dashboard";
                 // }
                 } else {
-                    // Show error message
                     const errorData = await response.json();
                     errorElement.textContent = errorData.message || "Login failed";
                     errorElement.style.display = "block";
@@ -138,7 +128,6 @@ async function isAdmin(email) {
         });
     }
 
-    // Forgot password link
     const forgotPasswordLink = document.querySelector(".forgot-password");
     if (forgotPasswordLink) {
         forgotPasswordLink.addEventListener("click", (e) => {

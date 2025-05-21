@@ -38,7 +38,7 @@ public class Tasks {
     private Users volunteer;
 
     @ManyToOne
-    @JoinColumn(name = "request_id") // 💥 NEW FK
+    @JoinColumn(name = "request_id")
     @JsonBackReference("request-tasks")
     private Requests request;
 
